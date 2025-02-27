@@ -27,6 +27,6 @@ func (s *gRPCServer) Run() error {
 	// register our grpc services
 	orderService := service.NewOrdersService()
 	handler.NewGrpcOrdersService(grpcServer, orderService)
-	log.Println("grpc service is listening on ", s.addr)
+	log.Println("Starting gRPC server on", s.addr)
 	return grpcServer.Serve(httpListener)
 }

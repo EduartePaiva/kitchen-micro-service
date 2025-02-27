@@ -7,4 +7,4 @@ gen:
 	--go-grpc_opt=paths=source_relative \
 
 run-orders:
-	@go run services/orders/main.go
+	@go run ./services/orders
