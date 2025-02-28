@@ -6,8 +6,6 @@ import (
 	"github.com/eduartepaiva/kitchen-micro-service/services/common/genproto/orders"
 	"github.com/eduartepaiva/kitchen-micro-service/services/orders/types"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 type OrdersGrpcHandler struct {
@@ -35,6 +33,10 @@ func (h OrdersGrpcHandler) CreateOrder(ctx context.Context, req *orders.CreateOr
 	}
 	return &orders.CreateOrderResponse{Status: "success"}, nil
 }
-func (OrdersGrpcHandler) GetOrders(context.Context, *orders.GetOrdersRequest) (*orders.GetOrdersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
+func (h OrdersGrpcHandler) GetOrders(ctx context.Context, req *orders.GetOrdersRequest) (*orders.GetOrdersResponse, error) {
+	svcOrders, err := h.ordersService.GetOrders(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return &orders.GetOrdersResponse{Orders: svcOrders}, nil
 }
